@@ -37,13 +37,14 @@ Y[,1]  <- activities[Y[,1],2]
 #----4 Appropriately labels the data set with descriptive activity names.
 
 # create a merged and unique dataset
+library("dplyr")
 dataset <- tbl_df(bind_cols(S,Y,X_mean_std))
 
 #Rename variable names with feature names
 features_of_interest_names  <- as.character(features[features_of_interest_index,2])
 names(dataset) <- c('Subject', 'Activity', features_of_interest_names)
 
-#5 Creates a 2nd, independent tidy data set with the average of each variable for each activity and each subject.
+#----5 Creates a 2nd, independent tidy data set with the average of each variable for each activity and each subject.
 
 Subject  <- unique(dataset$Subject)
 NumSubject  <- length(Subject)
@@ -52,8 +53,6 @@ NumActivity <- length(unique(Activity))
 Dim  <- dim(dataset)
 Cols  <- Dim[2]
 Tidy_dataset  <- dataset[1:(NumSubject*NumActivity), ]
-
-library("dplyr")
 
 rownum = 1
 for (s in 1:NumSubject) {
@@ -67,4 +66,4 @@ for (s in 1:NumSubject) {
 }
 
 #save tidy data as .txt file
-write.table(Tidy_dataset, "Tidy data set.txt")
+write.table(Tidy_dataset, "Tidy data set.txt", row.name=FALSE)
