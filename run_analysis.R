@@ -46,20 +46,20 @@ names(dataset) <- c('Subject', 'Activity', features_of_interest_names)
 
 #----5 Creates a 2nd, independent tidy data set with the average of each variable for each activity and each subject.
 
-Subject  <- unique(dataset$Subject)
-NumSubject  <- length(Subject)
-Activity  <- unique(dataset$Activity)
-NumActivity <- length(unique(Activity))
+Subjects  <- unique(dataset$Subject)
+NumSubjects  <- length(Subjects)
+Activities  <- unique(dataset$Activity)
+NumActivities <- length(unique(Activities))
 Dim  <- dim(dataset)
 Cols  <- Dim[2]
-Tidy_dataset  <- dataset[1:(NumSubject*NumActivity), ]
+Tidy_dataset  <- dataset[1:(NumSubjects*NumActivities), ]
 
 rownum = 1
-for (s in 1:NumSubject) {
-  for (a in 1:NumActivity) {
-    Tidy_dataset[rownum, 1] = Subject[s]
-    Tidy_dataset[rownum, 2] = Activity[a]
-    data <- filter(dataset, Subject==Subject[s], Activity==Activity[a])
+for (i in 1:NumSubjects) {
+  for (j in 1:NumActivities) {
+    Tidy_dataset[rownum, 1] = Subjects[i]
+    Tidy_dataset[rownum, 2] = Activities[j]
+    data <- filter(dataset, Subject==Subjects[i], Activity==Activities[j])
     Tidy_dataset[rownum, 3:Cols] <- colMeans(data[, 3:Cols])
     rownum = rownum+1
   }
